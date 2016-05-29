@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
 
-#if (defined? Setting != nil)
+  devise_for :users
+  
 begin
   root to: redirect(Setting.where(key: "homepage").first.value)
 rescue
-#else
   root to: "admin/pages#index"
 end
-#end
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -24,11 +23,9 @@ end
   end
 
 begin
-#if (defined? Setting != nil)
   Page.where.not(slug: nil).all.each do |page|
     get "/#{page.slug}", controller: "pages", action: "show", id: page.id
   end
-#else
 rescue
 end
 
