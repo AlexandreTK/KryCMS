@@ -10,7 +10,7 @@
     = f.label :title
     = f.text_field :title, class: "form-control"
 
-  - if(@page.type != nil)
+  - if(@page.type != nil || @page.type == nil)
     %h3 Custom fields
 
     =f.fields_for :fields do |c|

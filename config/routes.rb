@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
+#if (defined? Setting != nil)
+begin
   root to: redirect(Setting.where(key: "homepage").first.value)
-
+rescue
+#else
+  root to: "admin/pages#index"
+end
+#end
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -17,9 +23,14 @@ Rails.application.routes.draw do
     put "settings" => "settings#update"
   end
 
+begin
+#if (defined? Setting != nil)
   Page.where.not(slug: nil).all.each do |page|
     get "/#{page.slug}", controller: "pages", action: "show", id: page.id
   end
+#else
+rescue
+end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

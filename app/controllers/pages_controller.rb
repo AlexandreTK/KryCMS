@@ -7,13 +7,29 @@ class PagesController < ContentController
 
   protected
 
+#  def template_to_render
+#    if template_exists?("page-#{@page.id}")
+#      "page-#{@page.id}"
+#    elsif template_exists? "page-#{@page.type.name}"
+#      "page-#{@page.type.name}"
+#    else
+#      "page"
+#    end
+#  end
+
   def template_to_render
     if template_exists?("page-#{@page.id}")
       "page-#{@page.id}"
-    elsif template_exists? "page-#{@page.type.name}"
-      "page-#{@page.type.name}"
     else
+      if @page.type != nil
+        if template_exists?("page-#{@page.type.name}")
+          "page-#{@page.type.name}"
+        else
+          "page"
+        end
+      end
       "page"
     end
   end
+
 end
