@@ -1,12 +1,22 @@
 Rails.application.routes.draw do
 
+
+
   devise_for :users
   
-begin
-  root to: redirect(Setting.where(key: "homepage").first.value)
-rescue
-  root to: "admin/pages#index"
-end
+  # Avoiding crash when migrating to the db for the first time
+  begin
+    if Setting.where(key: "homepage").first.value != "/"
+      root to: redirect(Setting.where(key: "homepage").first.value)
+    else
+      root to: "welcome#index"
+    end
+  rescue
+    root to: "welcome#index"
+  end
+
+  # Do I need this 'welcome/index'?
+  #get 'welcome/index'
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -22,12 +32,12 @@ end
     put "settings" => "settings#update"
   end
 
-begin
-  Page.where.not(slug: nil).all.each do |page|
-    get "/#{page.slug}", controller: "pages", action: "show", id: page.id
+  begin
+    Page.where.not(slug: nil).all.each do |page|
+      get "/#{page.slug}", controller: "pages", action: "show", id: page.id
+    end
+  rescue
   end
-rescue
-end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
