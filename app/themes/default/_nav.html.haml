@@ -1,8 +1,25 @@
-%nav
-  =link_to "KryCMS", root_path, class: "navbar-brand"
-  #main-nav
-    %ul
-      - if (Menu.find_by_name("Main Nav"))
-        -@menus.find { |menu| menu.name == "Main Nav" }.menu_items.each do |item|
-          %li
-            =link_to item.title, item.url
+%nav.navbar.navbar-default.navbar-static-top
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-target" => "#main-nav", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      =link_to "KryCMS", root_path, class: "navbar-brand"
+    / Collect the nav links, forms, and other content for toggling
+    #main-nav.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        - if (Menu.find_by_name("Main Nav"))
+          -@menus.find { |menu| menu.name == "Main Nav" }.menu_items.each do |item|
+            %li
+              =link_to item.title, item.url
+        %li
+          =link_to "Admin - Content", admin_pages_path
+
+      -if user_signed_in?
+        %ul.nav.navbar-nav.navbar-right
+          %p.navbar-text
+            Signed in as #{current_user.name}.
+            =link_to "Log out.", destroy_user_session_path, method: :delete

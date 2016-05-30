@@ -5,14 +5,13 @@
     %title KryCMS
     = csrf_meta_tags
     =stylesheet_link_tag "theme-default"
-    =stylesheet_link_tag "theme-default"
     :css
       body {
 
       }
   %body
+    =render template: "_nav"
     .container
       =content_tag :div, notice, class: "flash bg-success" if notice
       =content_tag :div, alert, class: "flash bg-danger" if alert
-      =render template: "_nav"
       =yield
