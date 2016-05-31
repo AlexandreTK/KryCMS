@@ -1,5 +1,8 @@
 module Admin
   class TypesController < AdminController
+
+    # GET /index
+    # GET /index.json
     def index
       @types = Type.all
     end
@@ -33,7 +36,7 @@ module Admin
     end
 
     def destroy
-      @type = type.find params[:id]
+      @type = Type.find params[:id]
       if @type.destroy
         redirect_to admin_types_path, notice: "Type deleted."
       else
