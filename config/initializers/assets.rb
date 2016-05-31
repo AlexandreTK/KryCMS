@@ -10,5 +10,11 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
+# Default ccs for custom pages
 Rails.application.config.assets.precompile += %w( theme-default.css )
+
+# Default css for admin area
+Rails.application.config.assets.precompile += %w( admin/admin.css )
+Rails.application.config.assets.precompile += %w( admin/admin.js )
+
 Rails.application.config.assets.precompile += %w( ckeditor/filebrowser/images/gal_del.png )
