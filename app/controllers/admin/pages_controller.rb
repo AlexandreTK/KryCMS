@@ -25,6 +25,68 @@ module Admin
 
     # GET /pages/1/edit
     def edit
+
+      # If type becomes nil
+      if(@page.type == nil)
+          @page.fields.each do |p|
+            p.destroy
+          end
+
+      else
+
+        change = false
+        # If type not null (has fields) but was updated
+        if(@page.fields.count != 0)
+          @page.fields.each do |f|
+            if (f.field_definition.type != @page.type)
+              change = true
+              break
+            end
+          end
+          if(change)
+            @page.fields.each do |p|
+              p.destroy
+            end
+            @page = @page.save
+          end
+        end
+        if(change || @page.fields.count == 0)
+          @page.type.field_definitions.each do |definition|
+            @page.fields.build field_definition: definition
+          end
+        end
+
+      end
+
+
+        # if(@page.type != @page.fields.first.field_definition.type)
+        #   @page.fields.each do |p|
+        #     p.destroy
+        #   end
+        # end   
+
+
+      # if(@page.type != nil || change)
+      #   @page.type.field_definitions.each do |definition|
+      #     @page.fields.build field_definition: definition
+      #   end
+      # end
+
+      # if(@page.type != nil || @page.fields.blank?)
+      #   @page.type.field_definitions.each do |definition|
+      #     @page.fields.build field_definition: definition
+      #   end
+      # end
+
+      # if(@page.type != @page.fields.first.field_definition.type)
+      #   @page.fields.each do |p|
+      #     p.destroy
+      #   end
+      #   @page.type.field_definitions.each do |definition|
+      #     @page.fields.build field_definition: definition
+      #   end
+      # end
+
     end
 
     # POST /pages
@@ -77,7 +139,7 @@ module Admin
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def page_params
-        params.require(:page).permit(:type_id, :title, :body, :slug, :category_id, fields_attributes: [ :field_definition_id, :id, :value] )
+        params.require(:page).permit(:type_id, :title, :body, :slug, :category_id, :type_id, fields_attributes: [ :field_definition_id, :id, :value] )
       end
   end
 end

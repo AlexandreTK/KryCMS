@@ -1,4 +1,4 @@
 class Field < ActiveRecord::Base
   belongs_to :page
-  belongs_to :field_definition
+  belongs_to :field_definition #, dependent: :destroy
 end

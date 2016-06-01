@@ -10,15 +10,6 @@
     = f.label :title
     = f.text_field :title, class: "form-control"
 
-  - if(@page.type != nil || @page.type == nil)
-    %h3 Custom fields
-
-    =f.fields_for :fields do |c|
-      %p
-        =c.label :value, c.object.field_definition.key
-        =c.text_field :value, class: "form-control"
-        =c.hidden_field :field_definition_id
-
   %p
     = f.label :body
     = f.cktext_area :body
@@ -27,7 +18,22 @@
     = f.text_field :slug, class: "form-control"
   %p
     =f.label :category_id
-    =f.select :category_id, Category.all.map { |category| [ category.name, category.id] }, class: "form-control"
+    =f.select :category_id, Category.all.map { |category| [ category.name, category.id] }, include_blank: true, class: "form-control"
+
   %p
-    =f.hidden_field :type_id
+    =f.label :type_id
+    =f.select :type_id, Type.all.map { |type| [ type.name, type.id] }, include_blank: true, class: "form-control"
+
+  - if(@page.type != nil)
+    %h4 Custom type fields
+
+    =f.fields_for :fields do |c|
+      %p
+        =c.label :value, c.object.field_definition.key
+        =c.text_field :value, class: "form-control"
+        =c.hidden_field :field_definition_id
+
+
+  %p
+    / =f.hidden_field :type_id
     = f.submit 'Save'
