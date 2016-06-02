@@ -139,7 +139,7 @@ module Admin
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def page_params
-        params.require(:page).permit(:type_id, :title, :body, :slug, :category_id, :type_id, fields_attributes: [ :field_definition_id, :id, :value] )
+        params.require(:page).permit(:type_id, :title, :body, :slug, :category_id, fields_attributes: [ :field_definition_id, :id, :value] )
       end
   end
 end

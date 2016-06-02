@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :categories
     get "settings" => "settings#index"
     put "settings" => "settings#update"
+    resources :user_roles, except: [:show]
   end
 
   begin

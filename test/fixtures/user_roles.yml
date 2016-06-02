@@ -1,0 +1,10 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  role_num: 1
+  user: 
+
+two:
+  role_num: 1
+  user: 

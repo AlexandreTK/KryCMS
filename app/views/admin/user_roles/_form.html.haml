@@ -1,0 +1,10 @@
+=form_for [ "admin", @user_role ] do |f|
+  %p
+    %label Title:
+    / =f.text_field :title, placeholder: "Title", class: "form-control input-lg"
+    =f.select :role_num,  roles_available(@user_role) , class: "form-control", include_blank: true
+  %p
+    %label User:
+    =f.select :user_id,  users_available(@user_role) , class: "form-control", include_blank: true
+  %p
+    =f.submit

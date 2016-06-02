@@ -1,0 +1,14 @@
+%h1 User role
+
+%h3 List
+%ul
+  -@user_roles.each do |ur|
+    %li
+      =user_email(ur)
+      =link_to "edit", edit_admin_user_role_path(ur)
+      =link_to "Destroy", admin_user_role_path(ur), :method => :delete, :data => { :confirm => 'Are you sure?' }
+    %ul
+      %li
+        =role_name ur.role_num
+%p
+  =link_to "New User Role", new_admin_user_role_path
