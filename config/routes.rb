@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   # Avoiding crash when migrating to the db for the first time
+  # Setting "/" to be welcome#index when migrating
   begin
     if Setting.where(key: "homepage").first.value != "/"
       root to: redirect(Setting.where(key: "homepage").first.value)

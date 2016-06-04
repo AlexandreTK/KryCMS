@@ -14,7 +14,7 @@
 
     = csrf_meta_tags
   %body
-    -if (user_signed_in? && current_user.admin?)
+    -if (user_signed_in? && current_user.admin? && params[:controller].start_with?('admin/'))
       =render "admin/admin_nav"
     -else
       =render "nav"
