@@ -25,7 +25,6 @@ module Admin
 
     # GET /pages/1/edit
     def edit
-
       # If type becomes nil
       if(@page.type == nil)
           @page.fields.each do |p|
@@ -55,38 +54,7 @@ module Admin
             @page.fields.build field_definition: definition
           end
         end
-
       end
-
-
-        # if(@page.type != @page.fields.first.field_definition.type)
-        #   @page.fields.each do |p|
-        #     p.destroy
-        #   end
-        # end   
-
-
-      # if(@page.type != nil || change)
-      #   @page.type.field_definitions.each do |definition|
-      #     @page.fields.build field_definition: definition
-      #   end
-      # end
-
-      # if(@page.type != nil || @page.fields.blank?)
-      #   @page.type.field_definitions.each do |definition|
-      #     @page.fields.build field_definition: definition
-      #   end
-      # end
-
-      # if(@page.type != @page.fields.first.field_definition.type)
-      #   @page.fields.each do |p|
-      #     p.destroy
-      #   end
-      #   @page.type.field_definitions.each do |definition|
-      #     @page.fields.build field_definition: definition
-      #   end
-      # end
-
     end
 
     # POST /pages
@@ -104,6 +72,9 @@ module Admin
           format.json { render json: @page.errors, status: :unprocessable_entity }
         end
       end
+      # log
+      fields = @page.fields.each do |f| f.inspect end
+      register_log "Page created: #{@page.inspect} -- Custom type fields: #{fields}\n"
     end
 
     # PATCH/PUT /pages/1
@@ -119,16 +90,24 @@ module Admin
           format.json { render json: @page.errors, status: :unprocessable_entity }
         end
       end
+      # log
+      fields = @page.fields.each do |f| f.inspect end
+      register_log "Page updated: #{@page.inspect} -- Custom type fields: #{fields}\n"
     end
 
     # DELETE /pages/1
     # DELETE /pages/1.json
     def destroy
+      # var for register_log
+      fields = @page.fields.each do |f| f.inspect end
+        
       @page.destroy
       respond_to do |format|
         format.html { redirect_to admin_pages_url, notice: 'Page was successfully destroyed.' }
         format.json { head :no_content }
       end
+      # log
+      register_log "Page destroyed: #{@page.inspect} -- Custom type fields: #{fields}\n"
     end
 
     private

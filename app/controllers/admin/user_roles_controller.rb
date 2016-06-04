@@ -21,6 +21,7 @@ module Admin
         else
           render :new
         end
+      register_log "Role created: #{@user_role.inspect}\n"
     end
 
     def update
@@ -30,15 +31,18 @@ module Admin
         else
           render :edit
         end
+      register_log "Role updated: #{@user_role.inspect}\n"
     end
 
     def destroy
         @user_role = UserRole.find params[:id]
+
         if @user_role.destroy
           redirect_to admin_user_roles_path, notice: "Role deleted."
         else
           redirect_to admin_user_roles_path, alert: "Role was not deleted."
         end
+      register_log "Role destroyed: #{@user_role.inspect}\n"
     end
 
     protected

@@ -11,6 +11,7 @@ class Admin::SettingsController < AdminController
 
     Rails.application.reload_routes!
     redirect_to admin_settings_path, notice: "Settings saved."
+    register_log "Settings updated\n"
   end
 
   private

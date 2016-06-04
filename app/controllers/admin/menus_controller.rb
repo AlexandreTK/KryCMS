@@ -16,6 +16,8 @@ module Admin
       else
         render :new
       end
+      menu_items = @menu.menu_items.each do |m| m.inspect end
+      register_log "Menu created: #{@menu.inspect} -- Menu Items: #{menu_items}\n"
     end
 
     def update
@@ -25,6 +27,8 @@ module Admin
       else
         render :edit
       end
+      menu_items = @menu.menu_items.each do |m| m.inspect end
+      register_log "Menu updated: #{@menu.inspect} -- Menu Items: #{menu_items}\n"
     end
 
     def edit
@@ -34,11 +38,16 @@ module Admin
 
     def destroy
       @menu = Menu.find params[:id]
+      
+      #var for register_log
+      menu_items = @menu.menu_items.each do |m| m.inspect end
+ 
       if @menu.destroy
         redirect_to admin_menus_path, notice: "Menu deleted."
       else
         redirect_to admin_menus_path, alert: "Menu was not deleted."
       end
+      register_log "Menu destroyed: #{@menu.inspect} -- Menu Items: #{menu_items}\n"
     end
 
     protected

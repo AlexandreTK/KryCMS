@@ -36,6 +36,7 @@ module Admin
           format.json { render json: @category.errors, status: :unprocessable_entity }
         end
       end
+      register_log "Category created: #{@category.inspect}\n"
     end
 
     # PATCH/PUT /categories/1
@@ -50,6 +51,7 @@ module Admin
           format.json { render json: @category.errors, status: :unprocessable_entity }
         end
       end
+      register_log "Category updated: #{@category.inspect}\n"
     end
 
     # DELETE /categories/1
@@ -60,6 +62,7 @@ module Admin
         format.html { redirect_to admin_categories_path, notice: 'Category was successfully destroyed.' }
         format.json { head :no_content }
       end
+      register_log "Category destroyed: #{@category.inspect}\n"
     end
 
     private

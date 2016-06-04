@@ -19,6 +19,9 @@ module Admin
       else
         render :new
       end
+      # log
+      field_defs = @type.field_definitions.each do |f| f.inspect end
+      register_log "Type created: #{@type.inspect} -- Field Definitions: #{field_defs}\n"
     end
 
     def update
@@ -28,6 +31,9 @@ module Admin
       else
         render :edit
       end
+      # log
+      field_defs = @type.field_definitions.each do |f| f.inspect end
+      register_log "Type updated: #{@type.inspect} -- Field Definitions: #{field_defs}\n"
     end
 
     def edit
@@ -36,12 +42,17 @@ module Admin
     end
 
     def destroy
+      # var for register_log
+      field_defs = @type.field_definitions.each do |f| f.inspect end
+
       @type = Type.find params[:id]
       if @type.destroy
         redirect_to admin_types_path, notice: "Type deleted."
       else
         redirect_to admin_types_path, alert: "Type was not deleted."
       end
+      # log
+      register_log "Type destroyed: #{@type.inspect} -- Field Definitions: #{field_defs}\n"
     end
 
     protected
