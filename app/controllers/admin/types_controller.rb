@@ -9,7 +9,7 @@ module Admin
 
     def new
       @type = Type.new
-      3.times { @type.field_definitions.build }
+      2.times { @type.field_definitions.build }
     end
 
     def create
@@ -38,14 +38,13 @@ module Admin
 
     def edit
       @type = Type.find params[:id]
-      3.times { @type.field_definitions.build }
     end
 
     def destroy
+      @type = Type.find params[:id]
       # var for register_log
       field_defs = @type.field_definitions.each do |f| f.inspect end
 
-      @type = Type.find params[:id]
       if @type.destroy
         redirect_to admin_types_path, notice: "Type deleted."
       else
@@ -58,7 +57,7 @@ module Admin
     protected
 
     def type_params
-      params.require(:type).permit(:name, :field_definitions_attributes => [ :key, :id] )
+      params.require(:type).permit(:name, :field_definitions_attributes => [ :key, :id, :_destroy] )
     end
   end
 end
