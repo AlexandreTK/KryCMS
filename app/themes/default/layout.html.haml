@@ -5,6 +5,8 @@
     %title KryCMS
     = csrf_meta_tags
     =stylesheet_link_tag "theme-default"
+    // Remember to include this (js) to make sure devise works(uses jquery to log_out...)
+    =javascript_include_tag :application
     :css
       body {
 

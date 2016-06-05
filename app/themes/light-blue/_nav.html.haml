@@ -22,8 +22,7 @@
         %ul.nav.navbar-nav.navbar-right
           %p.navbar-text
             Signed in as #{current_user.name}.
-            =link_to "Log out.", destroy_user_session_path, method: :delete
-
+            =link_to "Log out.", destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?'}
 
 / %nav
 /   =link_to "KryCMS", root_path, class: "navbar-brand"
