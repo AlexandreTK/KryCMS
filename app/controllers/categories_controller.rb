@@ -1,8 +1,11 @@
 class CategoriesController < ContentController
   def show
-    @category = Category.includes(:pages).find params[:id]
-
-    render template: "category"
+    begin
+      @category = Category.includes(:pages).find params[:id]
+      render template: "category"
+    rescue
+      redirect_to welcome_path
+    end
   end
 
   protected

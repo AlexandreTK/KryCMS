@@ -98,16 +98,22 @@ module Admin
     # DELETE /pages/1
     # DELETE /pages/1.json
     def destroy
-      # var for register_log
-      fields = @page.fields.each do |f| f.inspect end
-        
-      @page.destroy
-      respond_to do |format|
-        format.html { redirect_to admin_pages_url, notice: 'Page was successfully destroyed.' }
-        format.json { head :no_content }
+      # Trying to delete a page that is homepage
+      if(Setting.where(key: "homepage").first.value == "/pages/" + @page.id.to_s)
+        redirect_to admin_settings_path, alert: "You are trying to delete a page that is Homepage. 
+        Please change the settings first."
+      else
+        # var for register_log
+        fields = @page.fields.each do |f| f.inspect end
+
+        @page.destroy
+        respond_to do |format|
+          format.html { redirect_to admin_pages_url, notice: 'Page was successfully destroyed.' }
+          format.json { head :no_content }
+        end
+        # log
+        register_log "Page destroyed: #{@page.inspect} -- Custom type fields: #{fields}\n"
       end
-      # log
-      register_log "Page destroyed: #{@page.inspect} -- Custom type fields: #{fields}\n"
     end
 
     private

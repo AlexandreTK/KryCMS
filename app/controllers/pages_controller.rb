@@ -1,8 +1,11 @@
 class PagesController < ContentController
   def show
-    @page = Page.find params[:id]
-
-    render template: template_to_render
+    begin
+      @page = Page.find params[:id]
+      render template: template_to_render
+    rescue
+      redirect_to welcome_path
+    end
   end
 
   protected

@@ -57,12 +57,19 @@ module Admin
     # DELETE /categories/1
     # DELETE /categories/1.json
     def destroy
-      @category.destroy
-      respond_to do |format|
-        format.html { redirect_to admin_categories_path, notice: 'Category was successfully destroyed.' }
-        format.json { head :no_content }
+      #if category is Homepage.
+      if(Setting.where(key: "homepage").first.value == "/categories/" + @category.id.to_s)
+        redirect_to admin_settings_path, alert: "You are trying to delete a category that is Homepage. 
+        Please change the settings first."
+      else
+        # everything fine
+        @category.destroy
+        respond_to do |format|
+          format.html { redirect_to admin_categories_path, notice: 'Category was successfully destroyed.' }
+          format.json { head :no_content }
+        end
+        register_log "Category destroyed: #{@category.inspect}\n"
       end
-      register_log "Category destroyed: #{@category.inspect}\n"
     end
 
     private

@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
 
   devise_for :users
-  
+
+
+  get 'welcome' => 'welcome#index'
   # Avoiding crash when migrating to the db for the first time
   # Setting "/" to be welcome#index when migrating
   begin
@@ -16,8 +18,6 @@ Rails.application.routes.draw do
     root to: "welcome#index"
   end
 
-  # Do I need this 'welcome/index'?
-  #get 'welcome/index'
 
   mount Ckeditor::Engine => '/ckeditor'
 
