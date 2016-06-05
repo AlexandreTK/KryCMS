@@ -15,8 +15,9 @@ Available: "Main Nav" --- Maybe create: "Right Side Menu", "Left Side Menu"
       =link_to 'Destroy', admin_menu_path(menu), :method => :delete, :data => { :confirm => 'Are you sure?' }
       %ul
         -menu.menu_items.each do |item|
-          %li=link_to item.title, url_for_menu_item(item)
-
+          -if !(item.title.blank? && item.url.blank?)
+            %li=link_to item.title, url_for_menu_item(item)
+            
 %p
   =link_to "New Menu", new_admin_menu_path
 

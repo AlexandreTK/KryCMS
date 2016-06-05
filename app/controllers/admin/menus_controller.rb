@@ -6,7 +6,7 @@ module Admin
 
     def new
       @menu = Menu.new
-      10.times { @menu.menu_items.build }
+      8.times { @menu.menu_items.build }
     end
 
     def create
@@ -32,8 +32,18 @@ module Admin
     end
 
     def edit
+      # Before build 8 additional fields
+      # @menu = Menu.find params[:id]
+      # 8.times { @menu.menu_items.build }
+      # Now: build only x additional fields, where x + blank fields = 6
       @menu = Menu.find params[:id]
-      10.times { @menu.menu_items.build }
+      additional = 6
+      @menu.menu_items.each do |mi| 
+        if (mi.title.blank? && mi.url.blank? && additional > 0)
+          additional = additional - 1
+        end
+      end
+      additional.times { @menu.menu_items.build }
     end
 
     def destroy
