@@ -47,7 +47,7 @@ group :development do
   gem 'spring'
 end
 
-
+gem 'jquery-turbolinks'
 gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'pry-rails'

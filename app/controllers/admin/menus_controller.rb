@@ -6,7 +6,10 @@ module Admin
 
     def new
       @menu = Menu.new
-      8.times { @menu.menu_items.build }
+      #params[:parent_id]
+      6.times { m = @menu.menu_items.build 
+        3.times {m.children.build}
+      }
     end
 
     def create
@@ -33,37 +36,41 @@ module Admin
 
     def edit
       # Before build 8 additional fields
-      # @menu = Menu.find params[:id]
-      # 8.times { @menu.menu_items.build }
-      # Now: build only x additional fields, where x + blank fields = 6
       @menu = Menu.find params[:id]
-      additional = 6
-      @menu.menu_items.each do |mi| 
-        if (mi.title.blank? && mi.url.blank? && additional > 0)
-          additional = additional - 1
-        end
-      end
-      additional.times { @menu.menu_items.build }
+      #8.times { @menu.menu_items.build }
+      6.times { m = @menu.menu_items.build 
+        3.times {m.children.build}
+      }
+  
+      # Now: build only x additional fields, where x + blank fields = 6
+      # @menu = Menu.find params[:id]
+      # additional = 6
+      # @menu.menu_items.each do |mi| 
+      #   if (mi.title.blank? && mi.url.blank? && additional > 0)
+      #     additional = additional - 1
+      #   end
+      # end
+      # additional.times { @menu.menu_items.build }
     end
 
     def destroy
       @menu = Menu.find params[:id]
       
       #var for register_log
-      menu_items = @menu.menu_items.each do |m| m.inspect end
+      # menu_items = @menu.menu_items.each do |m| m.inspect end
  
       if @menu.destroy
         redirect_to admin_menus_path, notice: "Menu deleted."
       else
         redirect_to admin_menus_path, alert: "Menu was not deleted."
       end
-      register_log "Menu destroyed: #{@menu.inspect} -- Menu Items: #{menu_items}\n"
+      # register_log "Menu destroyed: #{@menu.inspect} -- Menu Items: #{menu_items}\n"
     end
 
     protected
 
     def menu_params
-      params.require(:menu).permit(:name, :menu_items_attributes => [ :title, :url, :id] )
+      params.require(:menu).permit(:name, :menu_items_attributes => [ :id, :title, :url, :_destroy, :children_attributes =>[:id, :title, :url, :_destroy, :parent_id, :children]] )
     end
   end
 end

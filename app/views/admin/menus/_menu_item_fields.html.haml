@@ -1,0 +1,13 @@
+%fieldset
+  %h4 Menu Items
+  =f.label :title
+  =f.text_field :title
+  =f.label :url
+  =f.text_field :url
+  =f.hidden_field :id
+  =f.text_field :parent_id
+  =f.hidden_field :_destroy
+  =link_to "remove", '#', class: "remove_fields"
+  %h5 Menu Sub-Items
+  =f.fields_for :children do |builder|
+    = render 'children_menu_item_fields', f:builder
