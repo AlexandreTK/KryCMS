@@ -7,9 +7,8 @@ module Admin
     def new
       @menu = Menu.new
       #params[:parent_id]
-      6.times { m = @menu.menu_items.build 
-        3.times {m.children.build}
-      }
+      m = @menu.menu_items.build 
+      2.times {m.children.build}
     end
 
     def create
@@ -38,9 +37,7 @@ module Admin
       # Before build 8 additional fields
       @menu = Menu.find params[:id]
       #8.times { @menu.menu_items.build }
-      6.times { m = @menu.menu_items.build 
-        3.times {m.children.build}
-      }
+
   
       # Now: build only x additional fields, where x + blank fields = 6
       # @menu = Menu.find params[:id]

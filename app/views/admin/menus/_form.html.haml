@@ -6,36 +6,8 @@
 
   =f.fields_for :menu_items do |builder|
     = render 'menu_item_fields', f:builder
+  =link_to_add_fields "Add Menu Item", f, :menu_items
 
+  %p
   %div{:class => "action"}
     =f.submit
-
-
-/ =form_for [ "admin", @menu ] do |f|
-/   %p
-/     =f.label :name
-/     =f.text_field :name
-
-
-/   %h3 Menu items
-
-
-/   =f.fields_for :menu_items do |c|
-/     %p
-/       =c.label :title
-/       =c.text_field :title
-/       =c.label :url
-/       =c.text_field :url
-/       =c.hidden_field :id
-/       =c.label :parent_id, "parent:"
-/       -menu_items = []
-/       -@menu.menu_items.all.each do |m_i| menu_items << [ m_i.title, m_i.url] unless m_i.id == c.object.id end
-/       =c.select :parent_id, menu_items, include_blank: true, class: "form-control"
-
-/   %p
-/     =f.submit
-
-//m_i.id.to_s + " - " + c.object.id.to_s
-
-//http://stackoverflow.com/questions/5038341/rails-using-form-for-and-fields-for-how-do-you-access-the-sub-object-while-in
-//http://stackoverflow.com/questions/20182019/rails-4-fields-for-in-fields-for
