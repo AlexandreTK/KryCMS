@@ -16,5 +16,6 @@ Rails.application.config.assets.precompile += %w( theme-default.css )
 # Default css for admin area
 Rails.application.config.assets.precompile += %w( admin/admin.css )
 Rails.application.config.assets.precompile += %w( admin/admin.js )
+Rails.application.config.assets.precompile += %w( admin/pages.js )
 
-Rails.application.config.assets.precompile += %w( ckeditor/filebrowser/images/gal_del.png )
+Rails.application.config.assets.precompile += %w( ckeditor/* )

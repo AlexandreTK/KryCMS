@@ -15,7 +15,8 @@ module Admin
 
     # GET /pages/new
     def new
-      @page = Page.new type: Type.where(name: params[:type]).first
+      #@page = Page.new type: Type.where(name: params[:type]).first
+      @page = Page.new type: Type.where(id: params[:type_id]).first
       if(@page.type != nil)
         @page.type.field_definitions.each do |definition|
           @page.fields.build field_definition: definition
@@ -30,7 +31,9 @@ module Admin
           @page.fields.each do |p|
             p.destroy
           end
-
+          page_id = @page.id
+          @page.save
+          @page = Page.find(page_id)
       else
 
         change = false
@@ -46,7 +49,9 @@ module Admin
             @page.fields.each do |p|
               p.destroy
             end
-            @page = @page.save
+            page_id = @page.id
+            @page.save
+            @page = Page.find(page_id)
           end
         end
         if(change || @page.fields.count == 0)
@@ -116,6 +121,30 @@ module Admin
       end
     end
 
+    def update_fields 
+      type = Type.where(id: params[:type_id]).first
+      @page = Page.where(id: params[:page]).first
+      @page.type = type
+
+      #remove unnecessary fields
+      @page = clean_page_fields @page
+
+      #update other parameters:
+      @page.title = params[:title]
+      @page.body = params[:body]
+      @page.slug = params[:slug]
+      @page.category_id = params[:category_id]
+
+
+      #puts page.title
+      #@page = Page.build type, page
+      #puts @page.type
+      #render "_form.html.haml", :layout => false
+      respond_to do |format|
+        format.js { }
+      end
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_page
@@ -125,6 +154,44 @@ module Admin
       # Never trust parameters from the scary internet, only allow the white list through.
       def page_params
         params.require(:page).permit(:type_id, :title, :body, :slug, :category_id, fields_attributes: [ :field_definition_id, :id, :value] )
+      end
+
+      def clean_page_fields page
+        if(page.type == nil)
+            page.fields.each do |p|
+              p.destroy
+            end
+            page_id = page.id
+            page.save
+            page = Page.find(page_id)
+        else
+
+          change = false
+          # If type not null (has fields) but was updated
+          if(page.fields.count != 0)
+            page.fields.each do |f|
+              if (f.field_definition.type != page.type)
+                change = true
+                break
+              end
+            end
+            if(change)
+              page.fields.each do |p|
+                p.destroy
+              end
+              page_id = page.id
+              page.save
+              page = Page.find(page_id)
+            end
+          end
+          if(change || page.fields.count == 0)
+            page.type.field_definitions.each do |definition|
+              page.fields.build field_definition: definition
+            end
+          end
+          page.save
+          page
+        end
       end
   end
 end

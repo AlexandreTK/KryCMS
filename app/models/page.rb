@@ -17,4 +17,26 @@ class Page < ActiveRecord::Base
       super
     end
   end
+
+  # def self.build type, page
+  #   if (page==nil)
+  #     page = Page.new type: type
+  #   else
+  #     page.type = type
+  #   end
+  #   if(page.type != nil)
+  #     page.type.field_definitions.each do |definition|
+  #       page.fields.build field_definition: definition
+  #     end
+  #   end
+  #   page
+  # end
+
+      #   @page = Page.new type: Type.where(name: params[:type]).first
+      # if(@page.type != nil)
+      #   @page.type.field_definitions.each do |definition|
+      #     @page.fields.build field_definition: definition
+      #   end
+      # end
+
 end

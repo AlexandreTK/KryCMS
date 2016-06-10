@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :types, except: [:show]
     resources :menus, except: [:show]
-    resources :pages # /admin/pages
+    resources :pages do 
+      collection do
+        post 'update_fields'
+      end
+    end
     resources :categories
     get "settings" => "settings#index"
     put "settings" => "settings#update"

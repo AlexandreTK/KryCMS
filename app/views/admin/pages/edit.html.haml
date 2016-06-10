@@ -1,6 +1,7 @@
 %h1 Editing page
 
-= render 'form'
+- haml_tag("div", id: "page_form", data: { page: @page.id, }) do
+  = render 'form'
 
 = link_to 'Show', admin_page_path(@page)
 \|

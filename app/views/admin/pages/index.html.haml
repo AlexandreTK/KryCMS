@@ -19,6 +19,11 @@
           =link_to 'Destroy', admin_page_path(page), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %p
-  = link_to 'New Page', new_admin_page_path, class: "btn btn-primary"
-  -Type.all.each do |type|
-    = link_to "New #{type.name}", new_admin_page_path(type: type.name), class: "btn btn-default"
+
+  =form_tag new_admin_page_path, method: :get do
+    =select_tag :type_id, options_from_collection_for_select(Type.all, :id, :name), include_blank: "Default"
+    =submit_tag "New Page", name: nil
+
+  /= link_to 'New Page', new_admin_page_path, class: "btn btn-primary"
+  /-Type.all.each do |type|
+  /  = link_to "New #{type.name}", new_admin_page_path(type: type.name), class: "btn btn-default"

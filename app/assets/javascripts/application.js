@@ -17,3 +17,4 @@
 //= require ckeditor/init
 //= require_tree .
 //= stub admin/admin
+//= stub admin/pages

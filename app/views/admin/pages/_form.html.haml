@@ -1,4 +1,8 @@
-= form_for [ "admin", @page ] do |f|
+= javascript_include_tag 'admin/pages'
+/ - args = @page.id!=nil ? {remote: true} : {}
+/ = form_for [ "admin", @page ], args do |f|
+=form_for [ "admin", @page ] do |f|
+
   - if @page.errors.any?
     #error_explanation
       %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
@@ -21,19 +25,20 @@
     =f.select :category_id, Category.all.map { |category| [ category.name, category.id] }, include_blank: true, class: "form-control"
 
   %p
-    =f.label :type_id
-    =f.select :type_id, Type.all.map { |type| [ type.name, type.id] }, include_blank: true, class: "form-control"
+    -if (@page.id!=nil)
+      =f.label :type_id
+      =f.select :type_id, Type.all.map { |type| [ type.name, type.id] }, include_blank: true, class: "form-control"
 
-  - if(@page.type != nil)
-    %h4 Custom type fields
-
-    =f.fields_for :fields do |c|
-      %p
-        =c.label :value, c.object.field_definition.key
-        =c.text_field :value, class: "form-control"
-        =c.hidden_field :field_definition_id
+    -if (@page.type != nil)
+      %div{:id => "fields_type_page"}
+        /=render(:partial => "field_fields", :locals => {f: f, page: @page})
+        %h4 Custom type fields
+        =f.fields_for :fields, @page.fields do |builder|
+          %p
+          =builder.label :value, builder.object.field_definition.key
+          =builder.text_field :value, class: "form-control"
+          =builder.hidden_field :field_definition_id
 
 
   %p
-    / =f.hidden_field :type_id
     = f.submit 'Save'

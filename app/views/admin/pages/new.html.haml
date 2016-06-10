@@ -1,5 +1,8 @@
 %h1 New page
 
-= render 'form'
+//%div{:id => "page_form"}
+- haml_tag("div", id: "page_form", data: { page: @page.id }) do
+  = render 'form'
 
-= link_to 'Back', admin_pages_path
+
+=link_to 'Back', admin_pages_path
