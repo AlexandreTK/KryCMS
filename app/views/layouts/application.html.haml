@@ -8,13 +8,15 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
 
     / If admin: add admin assets
-    -if (user_signed_in? && current_user.admin?)
+    /-if (user_signed_in? && current_user.admin?)
+    -if (user_signed_in? && current_user.is_privileged? && params[:controller].start_with?('admin/'))
       =stylesheet_link_tag "admin/admin", media: 'all', 'data-turbolinks-track' => true
       =javascript_include_tag 'admin/admin', 'data-turbolinks-track' => true
 
     = csrf_meta_tags
   %body
-    -if (user_signed_in? && current_user.admin? && params[:controller].start_with?('admin/'))
+    /-if (user_signed_in? && current_user.admin? && params[:controller].start_with?('admin/'))
+    -if (user_signed_in? && current_user.is_privileged? && params[:controller].start_with?('admin/'))
       =render "admin/admin_nav"
     -else
       =render "nav"

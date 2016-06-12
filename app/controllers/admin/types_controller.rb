@@ -1,6 +1,8 @@
 module Admin
   class TypesController < AdminController
 
+    before_filter :ensure_content_manager
+
     # GET /index
     # GET /index.json
     def index

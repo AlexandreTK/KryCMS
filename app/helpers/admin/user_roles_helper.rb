@@ -1,6 +1,6 @@
 module Admin::UserRolesHelper
 
-  def roles_available ur
+  def roles_available_select ur
 
       options_for_select(
         UserRole::DEFAULT_ROLES,
@@ -9,7 +9,7 @@ module Admin::UserRolesHelper
 
   end
 
-  def users_available ur
+  def users_available_select ur
 #    begin 
 	
       users = User.all
@@ -18,6 +18,17 @@ module Admin::UserRolesHelper
       ur.user_id
       )
 
+  end
+
+  def available_users user_roles
+    users = []
+    user_roles.each do |ur|
+      if !users.include? ur.user_id
+        users << ur.user_id
+      end
+    end
+    users.sort! { |a,b| user_email_from_id(a) <=> user_email_from_id(b) }
+    users
   end
 
   def user_email ur
@@ -39,3 +50,22 @@ module Admin::UserRolesHelper
   end
 
 end
+
+  def user_email_from_id id
+    user = User.where(id: id).first
+    if(user.blank?)
+      "No User"
+    else
+      user.email
+    end
+  end
+
+
+  def roles_from_user_id id
+    r_roles = []
+    roles = UserRole.where(user_id: id)
+    roles.each do |r|
+      r_roles << r
+    end
+    r_roles
+  end

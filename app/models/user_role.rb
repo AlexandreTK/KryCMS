@@ -3,6 +3,11 @@ class UserRole < ActiveRecord::Base
 
 
   private
-  DEFAULT_ROLES = [["Content_Manager", 1], ["Product_Manager", 2], ["Full_Manager", 3] ]
+  CONTENT_M = 1
+  PRODUCT_M = 2
+  FULL_M = 3
+  DEFAULT_ROLES = [["Content_Manager", CONTENT_M], 
+  ["Product_Manager", PRODUCT_M], 
+  ["Full_Manager", FULL_M] ]
 
 end
