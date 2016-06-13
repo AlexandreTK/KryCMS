@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
 
-
   devise_for :users
 
 
@@ -27,6 +26,11 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :types, except: [:show]
     resources :menus, except: [:show]
+    resources :roles, except: [:show]  do
+      collection do
+        post 'build_controllers'
+      end
+    end
     resources :pages do 
       collection do
         post 'update_fields'

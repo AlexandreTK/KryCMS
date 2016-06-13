@@ -1,0 +1,19 @@
+= form_for [ "admin", @role ] do |f|
+  - if @role.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@role.errors.count, "error")} prohibited this role from being saved:"
+      %ul
+        - @role.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = hidden_field_tag "role[allowed_action_ids][]", nil
+    - AllowedAction.all.each do |allowed_action|
+      = check_box_tag "role[allowed_action_ids][]", allowed_action.id, @role.allowed_action_ids.include?(allowed_action.id), id: dom_id(allowed_action)
+      = label_tag dom_id(allowed_action), allowed_action.controller + ' - ' + allowed_action.action
+      %br
+  .actions
+    = f.submit 'Save'

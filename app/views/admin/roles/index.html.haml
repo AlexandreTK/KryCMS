@@ -1,0 +1,23 @@
+%h1 Listing roles
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th
+      %th
+      %th
+
+  %tbody
+    - @roles.each do |role|
+      %tr
+        %td= role.title
+        %td= link_to 'Edit', edit_admin_role_path(role)
+        %td= link_to 'Destroy', admin_role_path(role), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Role', new_admin_role_path
+
+%br
+= button_to "Reload all Actions", { method: :post, controller: "admin/roles", action: "build_controllers"}

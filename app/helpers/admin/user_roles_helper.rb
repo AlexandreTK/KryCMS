@@ -49,7 +49,6 @@ module Admin::UserRolesHelper
     return "Not found"
   end
 
-end
 
   def user_email_from_id id
     user = User.where(id: id).first
@@ -69,3 +68,6 @@ end
     end
     r_roles
   end
+
+  
+end

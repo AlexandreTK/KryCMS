@@ -23,31 +23,31 @@ module Admin
 
     private
 
-    def setting_params
-      params.require(:settings).permit(:homepage, :theme)
-    end
-
-    def get_themes
-      themes_directory = File.join(Rails.root, "app/themes/")
-      theme_folders = Dir.entries(themes_directory).select do |item|
-        !%w(. ..).include?(item)
-      end.map do |folder|
-        OpenStruct.new((YAML.load_file File.join(themes_directory, folder, "info.yaml")).merge id: folder)
+      def setting_params
+        params.require(:settings).permit(:homepage, :theme)
       end
-    end
+
+      def get_themes
+        themes_directory = File.join(Rails.root, "app/themes/")
+        theme_folders = Dir.entries(themes_directory).select do |item|
+          !%w(. ..).include?(item)
+        end.map do |folder|
+          OpenStruct.new((YAML.load_file File.join(themes_directory, folder, "info.yaml")).merge id: folder)
+        end
+      end
 
 
-    # def get_controllers
-    #   controllers = Hash.new("Controllers-Actions")
-    #   #controller = []
-    #   ApplicationController.descendants.each do |c|
-    #     actions = []
-    #     # c.constantize.action_methods ....
-    #     c.action_methods.collect{|a| actions << a.to_s}
-    #     controllers["#{c}"] = actions
-    #   end
-    #   controllers
-    # end
+      # def get_controllers
+      #   controllers = Hash.new("Controllers-Actions")
+      #   #controller = []
+      #   ApplicationController.descendants.each do |c|
+      #     actions = []
+      #     # c.constantize.action_methods ....
+      #     c.action_methods.collect{|a| actions << a.to_s}
+      #     controllers["#{c}"] = actions
+      #   end
+      #   controllers
+      # end
 
   end
 end

@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605042919) do
+ActiveRecord::Schema.define(version: 20160612191627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "admin_user_roles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "allowed_actions", force: :cascade do |t|
+    t.string   "controller"
+    t.string   "action"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -93,6 +100,22 @@ ActiveRecord::Schema.define(version: 20160605042919) do
   add_index "pages", ["category_id"], name: "index_pages_on_category_id", using: :btree
   add_index "pages", ["type_id"], name: "index_pages_on_type_id", using: :btree
 
+  create_table "role_actions", force: :cascade do |t|
+    t.integer  "role_id"
+    t.integer  "allowed_action_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "role_actions", ["allowed_action_id"], name: "index_role_actions_on_allowed_action_id", using: :btree
+  add_index "role_actions", ["role_id"], name: "index_role_actions_on_role_id", using: :btree
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string   "key"
     t.string   "value"
@@ -141,5 +164,7 @@ ActiveRecord::Schema.define(version: 20160605042919) do
   add_foreign_key "menu_items", "menus"
   add_foreign_key "pages", "categories"
   add_foreign_key "pages", "types"
+  add_foreign_key "role_actions", "allowed_actions"
+  add_foreign_key "role_actions", "roles"
   add_foreign_key "user_roles", "users"
 end
