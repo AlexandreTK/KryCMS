@@ -1,14 +1,15 @@
 %h1 User Roles
 
--users = available_users @user_roles
+-users = users_from_roles @user_roles
 %ul
 -users.each do |u|
   %li
-    = user_email_from_id u
+    = u.email
     %ul
-      - (roles_from_user_id u).each do |r|
+      - (user_roles_from_user u).each do |r|
         %li
-          =role_name r.role_num
+          =r.role.title
+          =link_to "edit - MAYBE REMOVE LATER", edit_admin_user_role_path(r)
           =link_to "Destroy", admin_user_role_path(r), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 / %h3 List

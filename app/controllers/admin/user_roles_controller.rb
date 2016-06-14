@@ -50,7 +50,7 @@ module Admin
     protected
 
     def user_params
-      params.require(:user_role).permit(:user_id, :role_num)
+      params.require(:user_role).permit(:user_id, :role_id)
     end
 
   end

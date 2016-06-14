@@ -7,7 +7,7 @@
   %p
     %label Title:
     / =f.text_field :title, placeholder: "Title", class: "form-control input-lg"
-    =f.select :role_num,  roles_available_select(@user_role) , class: "form-control", include_blank: true
+    =f.select :role_id,  roles_available_select(@user_role) , class: "form-control", include_blank: true
 
   %p
     =f.submit

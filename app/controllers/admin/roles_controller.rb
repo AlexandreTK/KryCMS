@@ -58,7 +58,7 @@ module Admin
     def destroy
       @role.destroy
       respond_to do |format| 
-        format.html { redirect_to admin_roles_url, notice: 'Role was successfully destroyed.' }
+        format.html { redirect_to admin_roles_path, notice: 'Role was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
@@ -68,11 +68,13 @@ module Admin
     def build_controllers
       AllowedAction.destroy_all
       ApplicationController.descendants.each do |c|
-        c.action_methods.each do |a|
-          AllowedAction.create!(controller: c.to_s, action: a.to_s)
+        if (c.to_s.start_with?"Admin::")
+          c.action_methods.each do |a|
+            AllowedAction.create!(controller: c.to_s, action: a.to_s)
+          end
         end
       end
-      redirect_to :back
+      redirect_to admin_roles_path
     end
 
     private

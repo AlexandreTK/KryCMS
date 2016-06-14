@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require ckeditor/init
+//= require bootstrap
 //= require_tree .
 //= stub admin/admin
 //= stub admin/pages
