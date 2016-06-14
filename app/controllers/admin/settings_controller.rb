@@ -1,7 +1,8 @@
 module Admin
   class SettingsController < AdminController
-
-    before_filter :ensure_admin
+    
+    #maybe
+    # before_filter :ensure_admin
 
     def index
       @settings = Setting.all

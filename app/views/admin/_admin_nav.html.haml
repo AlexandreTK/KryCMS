@@ -11,20 +11,25 @@
     / Collect the nav links, forms, and other content for toggling
     #main-nav.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        -if (current_user!=nil && current_user.is_content_manager?)
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/pages') )
           %li
             =link_to "Content", admin_pages_path
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/categories') )
           %li
             =link_to "Categories", admin_categories_path
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/menus') )
           %li
             =link_to "Menus", admin_menus_path
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/types') )
           %li
             =link_to "Types", admin_types_path
-        -if (current_user!=nil && current_user.admin?)
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/user_roles') )
           %li
             =link_to "User Role", admin_user_roles_path
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/roles') )
           %li
             =link_to "Roles", admin_roles_path
+        -if (current_user!=nil && current_user.has_permission_controller?('admin/settings') )
           %li
             =link_to "Settings", admin_settings_path
 

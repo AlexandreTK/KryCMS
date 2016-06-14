@@ -43,59 +43,6 @@ module Admin::UserRolesHelper
     r_roles
   end
 
-# NEW 1
-
-  # def user_ids_from_roles user_roles
-  #   users = []
-  #   user_roles.each do |ur|
-  #     if !users.include? ur.user_id
-  #       users << ur.user_id
-  #     end
-  #   end
-  #   users.sort! { |a,b| user_email_from_user_id(a) <=> user_email_from_user_id(b) }
-  #   users
-  # end
-
-
-  # def user_email_from_user_id id
-  #   user = User.where(id: id).first
-  #   if(user.blank?)
-  #     "No User"
-  #   else
-  #     user.email
-  #   end
-  # end
-
-
-  # def role_title_from_user_role user_role
-  #   if user_role == nil
-  #     return "Not found"
-  #   end
-  #   role = Role.where(id: user_role.role_id).first
-  #   if role == nil
-  #     return "Not found"
-  #   end
-  #   return role.title
-  # end
-
-
-  # def user_roles_from_user_id id
-  #   r_roles = []
-  #   roles = UserRole.where(user_id: id)
-  #   roles.each do |r|
-  #     r_roles << r
-  #   end
-  #   r_roles
-  # end
-
-
-
-
-
-
-
-
-
 
 
 #OLD

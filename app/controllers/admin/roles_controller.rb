@@ -1,7 +1,8 @@
 module Admin
   class RolesController < AdminController
 
-    before_filter :ensure_admin
+    # Maybe
+    # before_filter :ensure_admin
     
     before_action :set_role, only: [:edit, :update, :destroy]
 

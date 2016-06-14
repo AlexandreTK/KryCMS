@@ -1,8 +1,6 @@
 module Admin
   class MenusController < AdminController
 
-    before_filter :ensure_content_manager
-
 
     def index
       @menus = Menu.all

@@ -1,8 +1,8 @@
 class AdminController < ApplicationController
 
   before_filter :authenticate_user!
-#  before_filter :ensure_admin
-  before_filter :ensure_privileged
+  before_filter :ensure_permission
+
 
 
 private
@@ -18,36 +18,29 @@ def ensure_admin
   end
 end
 
-# General privilege
-def ensure_privileged
-  unless current_user && current_user.is_privileged?
-    reset_session
-  	redirect_to user_session
+
+def ensure_permission
+  if !(current_user)
+    return false
   end
+  if current_user.admin?
+    return true
+  end
+
+  UserRole.where(user_id: current_user.id).each do |u_r|
+
+      u_r_actions = u_r.role.allowed_actions
+      u_r_actions.each do |action|
+
+        if( action.controller.sub('::','/').sub('Controller','').downcase == params[:controller].to_s && action.action == action_name)
+          return true
+        end
+      end
+  end
+  redirect_to user_session
+  reset_session
 end
 
-# Full Manager
-def ensure_full_manager
-  unless current_user && current_user.is_full_manager?
-    reset_session
-  	redirect_to user_session
-  end
-end
-
-# Content Manager
-def ensure_content_manager
-  unless current_user && current_user.is_content_manager?
-    reset_session
-  	redirect_to user_session
-  end
-end
-# Product Manager
-def ensure_product_manager
-  unless current_user && current_user.is_product_manager?
-    reset_session
-  	redirect_to user_session
-  end
-end
 
 
 end

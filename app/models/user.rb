@@ -5,59 +5,31 @@ class User < ActiveRecord::Base
            :recoverable, :rememberable, :trackable, :validatable
 
 
-
-	def is_privileged?
+    # format
+    # admin/controller
+	def has_permission_controller? controller
 		if self.admin?
 			return true
 		end
-		roles = UserRole.where(user_id: self.id)
-		roles.each do |r|
-			if (r.role_num == UserRole::CONTENT_M || 
-				r.role_num == UserRole::PRODUCT_M || 
-				r.role_num == UserRole::FULL_M   )
-				return true
-			end
-		end
-		return false
+	    UserRole.where(user_id: self.id).each do |u_r|
+	        u_r_actions = u_r.role.allowed_actions
+	        u_r_actions.each do |action|
+	            if( action.controller.sub('::','/').sub('Controller','').downcase == controller)
+	                return true
+	            end
+	        end
+	    end
+	    return false
 	end
 
-	def is_full_manager?
-		if self.admin?
-			return true
-		end
-		roles = UserRole.where(user_id: self.id)
-		roles.each do |r|
-			if (r.role_num == UserRole::FULL_M)
-				return true
-			end
-		end
-		return false
-	end
 
-	def is_content_manager?
+	def is_privileged? 
 		if self.admin?
 			return true
 		end
 		roles = UserRole.where(user_id: self.id)
-		roles.each do |r|
-			if (r.role_num == UserRole::CONTENT_M || 
-				r.role_num == UserRole::FULL_M)
-				return true
-			end
-		end
-		return false
-	end
-
-	def is_product_manager?
-		if self.admin?
+		if !(roles.empty?)
 			return true
-		end
-		roles = UserRole.where(user_id: self.id)
-		roles.each do |r|
-			if (r.role_num == UserRole::PRODUCT_M || 
-				r.role_num == UserRole::FULL_M)
-				return true
-			end
 		end
 		return false
 	end

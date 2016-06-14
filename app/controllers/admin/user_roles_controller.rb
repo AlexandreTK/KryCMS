@@ -1,8 +1,9 @@
 module Admin
 
   class UserRolesController < AdminController
-
-    before_filter :ensure_admin
+    
+    #maybe
+    # before_filter :ensure_admin
     
     def index
       @user_roles = UserRole.all

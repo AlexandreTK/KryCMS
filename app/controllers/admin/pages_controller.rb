@@ -2,8 +2,6 @@ module Admin
   class PagesController < AdminController
     before_action :set_page, only: [:show, :edit, :update, :destroy]
 
-    before_filter :ensure_content_manager
-
     # GET /pages
     # GET /pages.json
     def index
