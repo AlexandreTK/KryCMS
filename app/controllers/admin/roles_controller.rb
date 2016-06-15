@@ -38,6 +38,7 @@ module Admin
           format.json { render json: @role.errors, status: :unprocessable_entity }
         end
       end
+      register_log "Role created: #{@role.inspect}\n"
     end
 
     # PATCH/PUT /roles/1
@@ -52,6 +53,7 @@ module Admin
           format.json { render json: @role.errors, status: :unprocessable_entity }
         end
       end
+      register_log "Role updated: #{@role.inspect}\n"
     end
 
     # DELETE /roles/1
@@ -62,6 +64,7 @@ module Admin
         format.html { redirect_to admin_roles_path, notice: 'Role was successfully destroyed.' }
         format.json { head :no_content }
       end
+      register_log "Role destroyed: #{@role.inspect}\n"
     end
 
 
@@ -76,6 +79,7 @@ module Admin
         end
       end
       redirect_to admin_roles_path
+      register_log "Updating application controllers \n"
     end
 
     private

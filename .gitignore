@@ -12,5 +12,8 @@
 !/log/.keep
 /tmp
 
+# Ignore ckeditor images
+#/public/uploads/ckeditor/pictures/*
+
 # Mac filesystem.
 .DS_Store
