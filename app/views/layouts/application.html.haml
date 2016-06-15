@@ -22,6 +22,7 @@
       =render "nav"
 
     .container
-      =content_tag :div, notice, class: "flash bg-success" if notice
-      =content_tag :div, alert, class: "flash bg-danger" if alert
+      /=content_tag :div, notice, class: "flash bg-success" if notice
+      /=content_tag :div, alert, class: "flash bg-danger" if alert
+      = render partial: "shared/flash_messages", flash: flash 
       = yield
